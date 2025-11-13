@@ -1,73 +1,68 @@
-# Welcome to your Lovable project
+🎼 Music Store Microservice on AWS EKS
+This project showcases a production-ready Kubernetes deployment of a sample music store web application on AWS EKS. It leverages cloud-native best practices, ensuring secure, automated HTTPS access using NGINX Ingress Controller and cert-manager for streamlined TLS certificate management (Let’s Encrypt).
 
-## Project info
+🌐 Live Demo
+Domain: https://musicstore.duckdns.org
+(Swap for your actual live URL)
 
-**URL**: https://lovable.dev/projects/23af3a54-3d70-481c-a7c6-3d36deb924b2
+AWS Region: us-east-1
+(Replace with your deployment region)
 
-## How can I edit this code?
+🛠️ Tech Stack & Architecture
+Component	Purpose	Location/Notes
+AWS EKS (Kubernetes)	Cluster orchestration	Cloud
+Docker/ECR	Container image registry	Provide your image reference
+NGINX Ingress	Ingress controller, traffic routing	Helm
+AWS NLB	Network Load Balancer for ingress	AWS
+cert-manager	TLS/SSL automation via ClusterIssuer	Helm
+Let’s Encrypt	Certificate Authority	ClusterIssuer
+DuckDNS + ExternalDNS	Dynamic DNS and DNS automation	DuckDNS (A record for NLB endpoint)
+🏗️ Architecture Overview
+Kubernetes Deployment: Manages replicated application Pods.
 
-There are several ways of editing your application.
+ClusterIP Service: Exposes Pods internally on port 80.
 
-**Use Lovable**
+NGINX Ingress Controller: Provides external HTTPS access via AWS NLB.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/23af3a54-3d70-481c-a7c6-3d36deb924b2) and start prompting.
+cert-manager: Automatically provisions and renews certificates from Let’s Encrypt.
 
-Changes made via Lovable will be committed automatically to this repo.
+DNS Management: DuckDNS domain points to NLB’s public entry point.
 
-**Use your preferred IDE**
+⚙️ Prerequisites
+Make sure these are installed and configured:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+kubectl
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+AWS CLI
 
-Follow these steps:
+eksctl
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Helm
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+DuckDNS domain (points to your load balancer’s public IP)
 
-# Step 3: Install the necessary dependencies.
-npm i
+🚀 Get Started: Deployment Steps
+Deploy Application and Service
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+bash
+kubectl apply -f k8s/deployment.yaml -n music-store
+kubectl apply -f k8s/service.yaml -n music-store
+kubectl get pods -n music-store
+Configure TLS Certificate Issuer
 
-**Edit a file directly in GitHub**
+bash
+kubectl apply -f k8s/cluster-issuer.yaml
+Deploy Ingress Resource (with HTTPS)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+bash
+kubectl apply -f k8s/ingress.yaml -n music-store
+Monitor & Verify Success
+Check external entrypoint (NLB):
 
-**Use GitHub Codespaces**
+bash
+kubectl get svc ingress-nginx-controller -n ingress-nginx
+Monitor certificate status:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/23af3a54-3d70-481c-a7c6-3d36deb924b2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+bash
+kubectl get certificate -n music-store
+# Wait for: READY: True
