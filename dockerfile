@@ -19,3 +19,10 @@ RUN npm run build
 
 # Stage 2 - Builder Stage
 FROM nginx:stable-alpine As Production
+
+#Copy necessary nginx file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy the built files from the 'builder' stage into the NGINX web root
+# Vite's default output directory is 'dist'
+COPY --from=builder /app/dist /usr/share/nginx/html
