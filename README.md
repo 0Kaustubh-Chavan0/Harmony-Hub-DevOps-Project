@@ -37,9 +37,9 @@ https://github.com/user-attachments/assets/ab77727b-4b76-4660-a450-4a7963334677
 
 [User] ⇄ [musicstore.duckdns.org] ⇄ [AWS NLB] ⇄ [NGINX Ingress] ⇄ [K8s Service] ⇄ [Pods]
 
-- cert-manager provisions TLS via Let’s Encrypt for HTTPS on Ingress
-- DuckDNS keeps domain records current with NLB’s external IP
-- GitHub Actions builds & pushes images, deploys to cluster
+- cert-manager provisions TLS via Let’s Encrypt for HTTPS on Ingress.
+- DuckDNS keeps domain records current with NLB’s external IP.
+- GitHub Actions builds & pushes images, deploys to cluster.
 
 ***
 
