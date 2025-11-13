@@ -9,7 +9,7 @@ This project demonstrates Kubernetes orchestration, automated HTTPS, CI/CD, dyna
 
 ## 🚀 Live Demo
 
-- **Application:** https://github.com/user-attachments/assets/c192fb3c-0ae4-4c32-9a5d-4390197a09e7
+https://github.com/user-attachments/assets/ab77727b-4b76-4660-a450-4a7963334677
 - **Domain:** [https://musicstore.duckdns.org](https://musicstore.duckdns.org) (*currently offline / demo*)
 - **AWS Region:** `us-east-1`
 - **Container Registry:** Amazon ECR
