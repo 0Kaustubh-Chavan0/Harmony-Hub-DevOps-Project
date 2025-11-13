@@ -1,5 +1,5 @@
 # Use Node.js 20 Alpine as base image
-FROM node:20-alpine
+FROM node:20-alpine As builder
 
 # Set working directory
 WORKDIR /app
@@ -13,8 +13,5 @@ RUN npm install
 # Copy the rest of the source code
 COPY . .
 
-# Expose app port (check if your app uses 3000 or 5173 etc.)
-EXPOSE 8080
-
-# Run the app
-CMD ["npm", "run", "dev"]
+#Run the build command
+RUN npm run build 
